@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod 
 
-class Attaker(ABC):
+class Attacker(ABC):
     @abstractmethod
     def attack(self, unit):
         pass
@@ -12,7 +12,7 @@ class Moveable(ABC):
         pass
 
 
-class GameObect:
+class GameObject:
     def __init__(self, id, name, x, y):
         self._id = id   
         self._name = name  
@@ -31,7 +31,7 @@ class GameObect:
     def getY(self):  
         return self._y
 
-class Unit(GameObect):
+class Unit(GameObject):
     def __init__(self, id, name, x, y, hp):
         super().__init__(id, name, x, y)
         self._hp = hp
@@ -46,7 +46,7 @@ class Unit(GameObect):
         self._hp= max(0, self._hp - damage)
 
 
-class Archer(Unit, Attaker, Moveable):
+class Archer(Unit, Attacker, Moveable):
     def __init__(self, id, name, x, y, hp, damage):
         super().__init__(id, name, x, y, hp)
         self._damage = damage
@@ -59,7 +59,7 @@ class Archer(Unit, Attaker, Moveable):
         self._y = y
 
 
-class Building(GameObect):
+class Building(GameObject):
     def __init__(self, id, name, x, y, built=False):
         super().__init__(id, name, x, y)
         self._built = built
@@ -67,7 +67,7 @@ class Building(GameObect):
     def isBuilt(self):
         return self._built
 
-class Fort(Building, Attaker):
+class Fort(Building, Attacker):
     def __init__(self, id, name, x, y, damage, built=False):
         super().__init__(id, name, x, y, built)
         self._damage = damage
