@@ -1,3 +1,4 @@
+# -*- coding: cp1251 -*-
 #SINGLETON
 
 class PartyChest:
@@ -177,7 +178,10 @@ class LegoBuilder:
     def build_body(self):
         pass
 
-    def build_tail_or_wings(self):
+    def build_tail(self):
+        pass
+
+    def build_wings(self):
         pass
 
     def build_details(self):
@@ -188,6 +192,8 @@ class LegoBuilder:
 
 # дети: конкретные звери
 class FoxBuilder(LegoBuilder):
+    has_tail=True
+    has_wings=False
     def build_head(self):
         self.animal.name = "Fox"
         self.animal.add("a reddish head with a sharp muzzle")
@@ -195,13 +201,15 @@ class FoxBuilder(LegoBuilder):
     def build_body(self):
         self.animal.add("a reddish body with a white breast")
 
-    def build_tail_or_wings(self):
+    def build_tail(self):
         self.animal.add("a long, fluffy tail with a white tip")
 
     def build_details(self):
         self.animal.add("two sharp ears")
 
 class OwlBuilder(LegoBuilder):
+    has_tail=False
+    has_wings=True
     def build_head(self):
         self.animal.name = "Owl"
         self.animal.add("a round, reddish head with large eyes")
@@ -209,13 +217,15 @@ class OwlBuilder(LegoBuilder):
     def build_body(self):
         self.animal.add("a rounded body with a brown breast")
 
-    def build_tail_or_wings(self):
+    def build_wings(self):
         self.animal.add("two broad wings with white tips")
 
     def build_details(self):
         self.animal.add("yellow beak")
 
 class SquirrelBuilder(LegoBuilder):
+    has_tail=True
+    has_wings=False
     def build_head(self):
         self.animal.name = "Squirrel"
         self.animal.add("a small red head")
@@ -223,7 +233,7 @@ class SquirrelBuilder(LegoBuilder):
     def build_body(self):
         self.animal.add("A slender body with a white belly.")
 
-    def build_tail_or_wings(self):
+    def build_tail(self):
         self.animal.add("a big tail")
 
     def build_details(self):
@@ -233,10 +243,14 @@ class Instruction: # знает порядок сборки
     def __init__(self, builder):
         self.builder = builder
 
-    def build(self):
+    def build(self, has_tail=False, has_wings=False):
         self.builder.build_head()
         self.builder.build_body()
-        self.builder.build_tail_or_wings()
+        if has_tail:
+            self.builder.build_tail()
+        if has_wings:
+            self.builder.build_wings()
+        
         self.builder.build_details()
 
 
